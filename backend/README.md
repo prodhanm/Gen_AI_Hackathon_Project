@@ -1,1 +1,1 @@
-![Screenshot 2023-12-05 at 11 51 39 AM](https://github.com/prodhanm/Gen_AI_Hackathon_Project/assets/101578812/7f041c6a-4cea-4b31-88f3-585d1606dd99)
+![Screenshot 2023-12-05 at 11 52 28 AM](https://github.com/prodhanm/Gen_AI_Hackathon_Project/assets/101578812/39ebbed5-fe6d-46b2-95ad-8e1670218f5f)
