@@ -13,6 +13,8 @@ from .config import Config
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
+app.config.from_object(Config)
+
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
@@ -34,7 +36,7 @@ db.init_app(app)
 Migrate(app, db)
 
 # Application Security
-CORS(app)
+# CORS(app)
 
 
 # Since we are deploying with Docker and Flask,

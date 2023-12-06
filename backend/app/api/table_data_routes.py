@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import TableData, db
+from app.models import db, TableData
 
 table_data_routes = Blueprint('table_data', __name__)
 
