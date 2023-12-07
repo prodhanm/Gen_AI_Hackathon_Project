@@ -2,10 +2,34 @@
     background-color: gray;
 }
 
+.hero-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+  }
+  
 .introWords {
-    margin-top: 250px;
+    margin-top: -15px;
     margin-left: 100px;
     margin-bottom: 250px;
     justify-content: center;
     font-weight: bold;
 }
+.card-container {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px; 
+}
+  
+.card-image {
+    width: 100%;
+    height: auto;
+}
+  
+.card-content {
+    padding: 16px;
+}
+  
