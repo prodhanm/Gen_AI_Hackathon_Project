@@ -11,6 +11,7 @@ const LandingPage = () => {
           <a href="#">Home</a>
           <a href="#">About</a>
           <a href="#">ChatBot</a>
+          <a href="#">Login</a>
         </nav>
       </header>
       <Hero />
