@@ -1,0 +1,11 @@
+* {
+    background-color: gray;
+}
+
+.introWords {
+    margin-top: 250px;
+    margin-left: 100px;
+    margin-bottom: 250px;
+    justify-content: center;
+    font-weight: bold;
+}
