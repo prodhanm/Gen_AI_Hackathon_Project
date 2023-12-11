@@ -1,11 +1,47 @@
 * {
     background-color: gray;
-}
-
-.introWords {
-    margin-top: 250px;
-    margin-left: 100px;
-    margin-bottom: 250px;
+  }
+  
+  .hero-container {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .intro-words {
+    margin-top: 20px;
+    text-align: center;
     font-weight: bold;
-}
+  }
+  
+  .card-container {
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 300px;
+  }
+  
+  .card-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card-content {
+    padding: 30px;
+    color: #9dd66e;
+    font-size: 30px;
+  }
+  
+  .intro-words {
+    text-align: right;
+    margin-right: 20px; 
+  }
+  
+  .intro-words h1 {
+    text-align: left;
+    margin-left: 20px; 
+  }
+  
