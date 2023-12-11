@@ -1,5 +1,4 @@
 from .db import db, environment, SCHEMA
-from flask_login import UserMixin
 
 class TableData(db.Model):
     __tablename__ = 'table_data'
