@@ -1,38 +1,69 @@
-from flask import Blueprint, Flask, render_template, request
+from flask import Blueprint, request, jsonify
 from flask_login import login_required
 import pandas as pd
+import os
 import openai
 
-open_API_routes = Blueprint('auth', __name__)
+open_AI_routes = Blueprint('auth', __name__)
 
-openai.api_key = 'your_openai_api_key'
+# openai_client = openai(api_key= os.environ['your_api_key'])
 
-@open_API_routes.route('/upload', methods=['POST'])
-def upload():
-    if 'file' not in request.files:
-        return 'No file part'
+@open_AI_routes.route('ask-openai', methods=['POST'])
+@login_required
+def ask_openai():
+    try:
+        data = request.get_json()
 
-    file = request.files['file']
+        if 'user_input' not in data:
+            return jsonify({'error': 'Missing user_input parameter'}), 400
 
-    if file.filename == '':
-        return 'No selected file'
+        user_input = data['user_input']
 
-    if file:
-        # Process CSV file using Pandas
-        df = pd.read_csv(file)
+        # Handle initial schema
+        messages = [{"role": "user", "content": user_input}]
+        response = get_response(messages)
 
-        question = "What is the structure of the database?"
+        return jsonify({'response': response})
 
-        prompt = f"Database Information:\n{df.head()}\n\nQuestion: {question}\nAnswer:"
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-        # Use OpenAI GPT to generate an answer
-        response = openai.Completion.create(
-            engine="davinci",
-            prompt=prompt,
-            max_tokens=100
-        )
+def get_response(messages):
+    completion = openai_client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=messages
+    )
+    return completion.choices[0].message.content
 
-        answer = response['choices'][0]['text']
+# if __name__ == '__main__':
+#     open_API_routes.run(debug=True)
 
-        return f'Answer: {answer}'
+
+# @open_API_routes.route('/upload', methods=['POST'])
+# def upload():
+#     if 'file' not in request.files:
+#         return 'No file part'
+
+#     file = request.files['file']
+
+#     if file.filename == '':
+#         return 'No selected file'
+
+#     if file:
+#         # Process CSV file using Pandas
+#         df = pd.read_csv(file)
+
+#         question = "What is the structure of the database?"
+
+#         prompt = f"Database Information:\n{df.head()}\n\nQuestion: {question}\nAnswer:"
+
+#         response = openai.Completion.create(
+#             engine="davinci",
+#             prompt=prompt,
+#             max_tokens=100
+#         )
+
+#         answer = response['choices'][0]['text']
+
+#         return f'Answer: {answer}'
 
