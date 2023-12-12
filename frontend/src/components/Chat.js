@@ -17,7 +17,7 @@ const Chat = () => {
     //the message history should appear above the active text box like a traditional texting app
     //console.log(textInput);   
     try {
-      setResponse(await axiosInstance.post('ask-openapi', textInput));
+      setResponse(await axiosInstance.post('ask-openai', textInput));
       return response.data;
     } catch (error) {
       console.error('L:', error);
