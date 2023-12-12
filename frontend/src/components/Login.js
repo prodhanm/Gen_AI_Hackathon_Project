@@ -13,9 +13,9 @@ const Login = () => {
 			username: username,
 			password: password,
 		};
-/*
+
 		try {
-			const response = await fetch("http://localhost:8080/authenticate", {
+			const response = await fetch("http://localhost:8080/login", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -28,7 +28,7 @@ const Login = () => {
 				const { jwt } = data;
 				localStorage.setItem("jwtToken", jwt);
 				localStorage.setItem("username", username);
-				navigate("/main");
+				console.log("This would work in theory.")
 			} else {
 				setSuccessMessage("");
 				setErrorMessage("Login failed. Please check your information.");
@@ -36,9 +36,9 @@ const Login = () => {
 		} catch (error) {
 			console.log(error);
 			setSuccessMessage("");
-			setErrorMessage("An error occurred. Please try again later.");
+			setErrorMessage("A login error occurred. Please try again.");
 		}
-        */
+        
 	};
 
 
@@ -51,7 +51,7 @@ const Login = () => {
 					<div className="loginBox">
 						<label htmlFor="username">Username</label>
 						<br />
-						<input
+						<input className="addedInfo"
 							type="text"
 							id="Username"
 							onChange={(e) => setUsername(e.target.value)}
@@ -61,7 +61,7 @@ const Login = () => {
 					<div className="loginBox">
 						<label htmlFor="password">Password</label>
 						<br />
-						<input
+						<input className="addedInfo"
 							type="password"
 							id="Password"
 							onChange={(e) => setPassword(e.target.value)}
@@ -79,9 +79,9 @@ const Login = () => {
                     <br/>
 
 					{successMessage && (
-						<p style={{ color: "green" }}>{successMessage}</p>
+						<p className="center" style={{ color: "green" }}>{successMessage}</p>
 					)}
-					{errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+					{errorMessage && <p className="center">{errorMessage}</p>}
 				</div>
 			</div>
 		);
