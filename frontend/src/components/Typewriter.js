@@ -7,13 +7,12 @@ const Typewriter = ({ text, delay, infinite }) => {
   useEffect(() => {
     let timeout;
 
-    if (currentIndex <= text.length) {
+    if (currentIndex < text.length) { // Change this condition
       timeout = setTimeout(() => {
         setCurrentText(prevText => prevText + text[currentIndex]);
         setCurrentIndex(prevIndex => prevIndex + 1);
       }, delay);
-
-    } else if (infinite) { 
+    } else if (infinite) {
       setCurrentIndex(0);
       setCurrentText('');
     }
