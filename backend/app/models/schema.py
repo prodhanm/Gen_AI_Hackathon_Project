@@ -17,4 +17,6 @@ class Schema(db.Model):
             'id': self.id,
             'name': self.name,
             'user_id': self.user_id
+
         }
+
