@@ -8,21 +8,21 @@ const Chat = () => {
   const [textInput, setTextInput] = useState('');
   const [response, setResponse] = useState('');
 
-  const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/',
-  });
-
-  const interact = async () => {
-    //sends textInput to the AI and receives the response, then prints the response and clears the text box.
-    //the message history should appear above the active text box like a traditional texting app
-    //console.log(textInput);   
-    try {
-      setResponse(await axiosInstance.post('ask-openapi', textInput));
-      return response.data;
-    } catch (error) {
-      console.error('L:', error);
-    }
-  }
+  const interact = async () => axios({
+    method: 'POST',
+    url: 'http://localhost:5000/api/ask-openai',
+    data: {
+        user_input: 'Hello',
+        base_path: 'C:\\Users\\joshu_yu92ohr\\Desktop\\HACKT\\Gen_AI_Hackathon_Project\\backend',
+    },
+    headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
+    },
+    }).then(function (response) {
+        console.log(response);
+    }).catch(function (error) {
+        console.log(error);
+    });
 
   return (
     <div className="main">
