@@ -6,12 +6,10 @@ const LandingPage = () => {
   return (
     <div>
       <header>
-        <h3>LOGO</h3>
+        <img src="logo.png" alt="Italian Trulli" />
         <nav>
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">ChatBot</a>
           <a href="#">Login</a>
+          <a href="#">Register</a>
         </nav>
       </header>
       <Hero />
