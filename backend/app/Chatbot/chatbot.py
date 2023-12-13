@@ -6,10 +6,12 @@ client = OpenAI(api_key= os.environ['your_api_key'])
 
 def get_response(messages):
     # Create a chat completion with the conversation history
+    #Start-time utilizing decorator
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=messages
     )
+    #Endtime
     # Return the response text
     return completion.choices[0].message.content
 

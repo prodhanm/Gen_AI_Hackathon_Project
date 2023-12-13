@@ -8,7 +8,8 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.table_data_routes import table_data_routes
-from api.schema_routes import schema_routes
+from app.api.schema_routes import schema_routes
+from .api.open_API_routes import open_AI_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -34,12 +35,20 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(table_data_routes, url_prefix='/api/table_data')
 app.register_blueprint(schema_routes, url_prefix='/api/schema')
+app.register_blueprint(open_AI_routes, url_prefix='/api/ask-openai')
 db.init_app(app)
 Migrate(app, db)
 
 # Application Security
-# CORS(app)
+cors_config = {
+    "origins": ["*"],  # Specify which domains can make requests
+    "methods": ["GET", "POST", "PUT", "DELETE"],  # Allowed methods
+    "allow_headers": ["Content-Type", "Authorization"],  # Allowed headers
+    "expose_headers": ["X-Custom-Header"],  # Headers that are safe to expose to the API of a CORS API specification
+    "supports_credentials": True  # Allow cookies to be sent with the requests
+}
 
+CORS(app, resources={"/api/*": cors_config})
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.
