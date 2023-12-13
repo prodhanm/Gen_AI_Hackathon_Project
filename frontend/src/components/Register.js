@@ -10,13 +10,13 @@ const Register = () => {
     
 	const handleRegister = async () => {
 		const requestObject = {
+            username: username,
             email: email,
-			username: username,
 			password: password,
 		};
-/*
+
 		try {
-			const response = await fetch("http://localhost:8080/authenticate", {
+			const response = await fetch("http://localhost:8080/signup", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -26,20 +26,20 @@ const Register = () => {
 
 			if (response.ok) {
 				const data = await response.json();
-				const { jwt } = data;
-				localStorage.setItem("jwtToken", jwt);
+				const { csrf_token } = data;
+				localStorage.setItem("csrf_token", csrf_token);
 				localStorage.setItem("username", username);
-				navigate("/main");
+				console.log("You would have been successful if this was linked.")
 			} else {
 				setSuccessMessage("");
-				setErrorMessage("Login failed. Please check your information.");
+				setErrorMessage("Registation failed. .");
 			}
 		} catch (error) {
 			console.log(error);
 			setSuccessMessage("");
-			setErrorMessage("An error occurred. Please try again later.");
+			setErrorMessage("An error occurred. Please try again.");
 		}
-        */
+        
 	};
 
     return (
@@ -48,20 +48,10 @@ const Register = () => {
         <h1 className="center">Register a new Account</h1>
             <div className="login-text-container">		
 
-                <div className="loginBox">
-                    <label htmlFor="username">Email</label>
-                    <br />
-                    <input
-                        type="text"
-                        id="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>		
-
-                <div className="loginBox">
+              <div className="loginBox">
                     <label htmlFor="username">Username</label>
                     <br />
-                    <input
+                    <input className="addedInfo"
                         type="text"
                         id="Username"
                         onChange={(e) => setUsername(e.target.value)}
@@ -69,9 +59,19 @@ const Register = () => {
                 </div>
 
                 <div className="loginBox">
+                    <label htmlFor="username">Email</label>
+                    <br />
+                    <input className="addedInfo"
+                        type="text"
+                        id="Email"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>		
+
+                <div className="loginBox">
                     <label htmlFor="password">Password</label>
                     <br />
-                    <input
+                    <input className="addedInfo"
                         type="password"
                         id="Password"
                         onChange={(e) => setPassword(e.target.value)}
@@ -89,9 +89,9 @@ const Register = () => {
                 <br/>
 
                 {successMessage && (
-                    <p style={{ color: "green" }}>{successMessage}</p>
+                    <p className="center" style={{ color: "green" }}>{successMessage}</p>
                 )}
-                {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+                {errorMessage && <p className="center">{errorMessage}</p>}
             </div>
         </div>
     );
