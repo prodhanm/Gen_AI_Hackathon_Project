@@ -15,8 +15,6 @@ from .config import Config
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
-app.config.from_object(Config)
-
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
@@ -40,15 +38,16 @@ db.init_app(app)
 Migrate(app, db)
 
 # Application Security
-cors_config = {
-    "origins": ["*"],  # Specify which domains can make requests
-    "methods": ["GET", "POST", "PUT", "DELETE"],  # Allowed methods
-    "allow_headers": ["Content-Type", "Authorization"],  # Allowed headers
-    "expose_headers": ["X-Custom-Header"],  # Headers that are safe to expose to the API of a CORS API specification
-    "supports_credentials": True  # Allow cookies to be sent with the requests
-}
+# cors_config = {
+#     "origins": ["*"],  # Specify which domains can make requests
+#     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # Allowed methods
+#     "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],  # Allowed headers
+#     "supports_credentials": True,  # Allow cookies to be sent with the requests
+#     "Access-Control-Request-Method" : ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+#     "Access-Control-Allow-Headers" : ["Content-Type", "Authorization"]
+# }
 
-CORS(app, resources={"/api/*": cors_config})
+CORS(app)
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.

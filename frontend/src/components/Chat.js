@@ -10,13 +10,14 @@ const Chat = () => {
 
   const interact = async () => axios({
     method: 'POST',
-    url: 'http://localhost:5000/api/ask-openai',
+    url: 'http://localhost:5000/ask-openai',
     data: {
         user_input: 'Hello',
         base_path: 'C:\\Users\\joshu_yu92ohr\\Desktop\\HACKT\\Gen_AI_Hackathon_Project\\backend',
     },
     headers: {
-        'Content-Type': 'text/plain;charset=utf-8',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin' : ''
     },
     }).then(function (response) {
         console.log(response);
