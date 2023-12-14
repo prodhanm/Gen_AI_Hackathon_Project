@@ -35,7 +35,7 @@ const Chat = () => {
 
   return (
     <div className="main">
-      <h1 style={{marginLeft:'3vw'}}> Say Hi to Ferestha </h1>
+      <h1> Say Hi to Ferestha </h1>
       <div className="chatInterface">
       <div className="convDisplay">
         {chat.map((item, index) => (
@@ -51,7 +51,7 @@ const Chat = () => {
               <Form.Control as="textarea" rows={5} value={textInput} placeholder="" onChange={(e) => setTextInput(e.target.value)}
                 style={{width:'90vw',height:'20vh',fontSize:'18px',marginTop:'40vh',marginLeft:'5vw',backgroundColor:'darkgray',borderColor:'black',borderRadius:'10px'}}></Form.Control>       
               <br></br>
-              <button type="button" onClick={interact} style={{marginLeft:'5vw',marginTop:'3vh',fontSize:'18px'}}>Submit</button>
+              <button type="button" onClick={interact}>Submit</button>
             </Form.Group>
           </Form>
         </div>
