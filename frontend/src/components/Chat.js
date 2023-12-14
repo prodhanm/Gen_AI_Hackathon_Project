@@ -23,15 +23,23 @@ const Chat = () => {
 
   const interact = async () => {
     try {
-        const response = await axiosInstance.post('api/ask-openai', { user_input: textInput, base_path: basePath, chat: chat });
-        setChat([...chat, { text: textInput, response: response.data }]);
-        setTextInput('');
-        console.log(textInput)
-        console.log(response.data)
+      const response = await axiosInstance.post('api/ask-openai', {
+        user_input: textInput,
+        base_path: basePath,
+        chat: chat.map((item) => item.text), // Extract user messages
+      });
+  
+      const userMessage = { role: "user", text: textInput };
+      const aiMessage = { role: "AI", text: response.data.response }; // Assuming 'response.data.response' contains the AI's response
+  
+      setChat([...chat, userMessage, aiMessage]);
+      setTextInput('');
+      console.log(textInput);
+      console.log(response.data);
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
-  }
+  };
 
   return (
     <div className="main">
