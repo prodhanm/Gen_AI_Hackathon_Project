@@ -25,7 +25,7 @@ const Chat = () => {
     try {
       const response = await axiosInstance.post('api/ask-openai', {
         user_input: textInput,
-        base_path: basePath,
+        //base_path: basePath,
         chat: chat.map((item) => item.text), // Extract user messages
       });
   
@@ -41,6 +41,27 @@ const Chat = () => {
     }
   };
 
+  const sendFile = async () => {
+    //console.log("Sent file path to AI");
+    try {
+      const response = await axiosInstance.post('api/ask-openai', {
+        //user_input: textInput,
+        base_path: basePath,
+        chat: chat.map((item) => item.text), // Extract user messages
+      });
+  
+      //const userMessage = { role: "user", text: textInput };
+      const aiMessage = { role: "AI", text: response.data.response }; // Assuming 'response.data.response' contains the AI's response
+  
+      setChat([...chat,/* userMessage,*/ aiMessage]);
+      //setTextInput('');
+      //console.log(textInput);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   return (
     <div className="main">
       <h1> Say Hi to Ferestha </h1>
@@ -48,18 +69,17 @@ const Chat = () => {
       <div className="convDisplay">
         {chat.map((item, index) => (
           <div key={index}>
-            <p><strong>You:</strong> {item.text}</p>
-            <p><strong>AI:</strong> {item.response?.response}</p>
+            <p><strong>{item.role}</strong> {item.text}</p>
           </div>
         ))}
       </div>
         <div className="input">
           <Form>
             <Form.Group>
-              <Form.Control as="textarea" rows={5} value={textInput} placeholder="" onChange={(e) => setTextInput(e.target.value)}
-                style={{width:'90vw',height:'20vh',fontSize:'18px',marginTop:'40vh',marginLeft:'5vw',backgroundColor:'darkgray',borderColor:'black',borderRadius:'10px'}}></Form.Control>       
+              <Form.Control as="textarea" rows={5} value={textInput} placeholder="" onChange={(e) => setTextInput(e.target.value)}></Form.Control>       
               <br></br>
               <button type="button" onClick={interact}>Submit</button>
+              <button type="button" onClick={sendFile} style={{marginLeft:'1vw'}}>File</button>
             </Form.Group>
           </Form>
         </div>
