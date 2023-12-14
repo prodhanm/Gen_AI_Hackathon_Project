@@ -40,16 +40,6 @@ Migrate(app, db)
 # Application Security
 # cors_config = {
 #     "origins": ["*"],  # Specify which domains can make requests
-<<<<<<< HEAD
-#     "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # Allowed methods
-#     "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],  # Allowed headers
-#     "supports_credentials": True,  # Allow cookies to be sent with the requests
-#     "Access-Control-Request-Method" : ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-#     "Access-Control-Allow-Headers" : ["Content-Type", "Authorization"]
-# }
-
-CORS(app)
-=======
 #     "methods": ["GET", "POST", "PUT", "DELETE"],  # Allowed methods
 #     "allow_headers": ["Content-Type", "Authorization"],  # Allowed headers
 #     "expose_headers": ["X-Custom-Header"],  # Headers that are safe to expose to the API of a CORS API specification
@@ -63,7 +53,6 @@ cors_config = {
 }
 
 CORS(app, resources={r"/api/*": cors_config})
->>>>>>> e2eaaff (Fixed CORS, began debugging open_API_routes.py)
 
 # Since we are deploying with Docker and Flask,
 # we won't be using a buildpack when we deploy to Heroku.

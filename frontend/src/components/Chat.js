@@ -12,24 +12,6 @@ const Chat = () => {
   const { getCookie } = useCookie(); // Use the useCookie hook
   const csrfToken = getCookie('localhost'); // Replace 'csrf_token' with the actual name of your CSRF cookie
 
-<<<<<<< HEAD
-  const interact = async () => axios({
-    method: 'POST',
-    url: 'http://localhost:5000/ask-openai',
-    data: {
-        user_input: 'Hello',
-        base_path: 'C:\\Users\\joshu_yu92ohr\\Desktop\\HACKT\\Gen_AI_Hackathon_Project\\backend',
-    },
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : ''
-    },
-    }).then(function (response) {
-        console.log(response);
-    }).catch(function (error) {
-        console.log(error);
-    });
-=======
   const axiosInstance = axios.create({
     baseURL: 'http://localhost:5000/',
     headers: {
@@ -41,16 +23,23 @@ const Chat = () => {
 
   const interact = async () => {
     try {
-        const response = await axiosInstance.post('api/ask-openai', { user_input: textInput, base_path: basePath, chat: chat });
-        setChat([...chat, { text: textInput, response: response.data }]);
-        setTextInput('');
-        console.log(textInput)
-        console.log(response.data)
+      const response = await axiosInstance.post('api/ask-openai', {
+        user_input: textInput,
+        base_path: basePath,
+        chat: chat.map((item) => item.text), // Extract user messages
+      });
+  
+      const userMessage = { role: "user", text: textInput };
+      const aiMessage = { role: "AI", text: response.data.response }; // Assuming 'response.data.response' contains the AI's response
+  
+      setChat([...chat, userMessage, aiMessage]);
+      setTextInput('');
+      console.log(textInput);
+      console.log(response.data);
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
-  }
->>>>>>> e2eaaff (Fixed CORS, began debugging open_API_routes.py)
+  };
 
   return (
     <div className="main">
@@ -59,8 +48,7 @@ const Chat = () => {
       <div className="convDisplay">
         {chat.map((item, index) => (
           <div key={index}>
-            <p><strong>You:</strong> {item.text}</p>
-            <p><strong>AI:</strong> {item.response.response}</p>
+            <p><strong>{item.role}:</strong> {item.text}</p>
           </div>
         ))}
       </div>
