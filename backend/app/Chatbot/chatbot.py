@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 
 # Instantiate the client with your API key
-client = OpenAI(api_key= os.environ['your_api_key'])
+client = OpenAI(api_key= "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")
 
 def get_response(messages):
     # Create a chat completion with the conversation history
