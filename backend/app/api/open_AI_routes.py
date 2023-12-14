@@ -3,18 +3,18 @@ from flask_login import login_required
 from flask_cors import cross_origin
 import pandas as pd
 import os
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
 
 open_AI_routes = Blueprint('open_AI_routes', __name__)
-openai.api_key= os.environ['your_api_key']
+client = OpenAI(api_key= os.environ['your_api_key'])
 
 def get_response(chat):
     # Create a chat completion with the conversation history
     #Start-time utilizing decorator
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
         messages=chat
     )#

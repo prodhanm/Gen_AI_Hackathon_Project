@@ -49,7 +49,7 @@ const Chat = () => {
         {chat.map((item, index) => (
           <div key={index}>
             <p><strong>You:</strong> {item.text}</p>
-            <p><strong>AI:</strong> {item.response.response}</p>
+            <p><strong>AI:</strong> {item.response?.response}</p>
           </div>
         ))}
       </div>
