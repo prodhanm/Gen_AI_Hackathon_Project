@@ -1,4 +1,5 @@
 backend/app/.env
+/.env
 backend/app/config.py
 .project
 package-lock.json
