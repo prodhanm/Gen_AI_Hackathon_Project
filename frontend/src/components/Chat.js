@@ -1,26 +1,64 @@
 import "../style/Chat.css";
 import Form from "react-bootstrap/Form";
-import { useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react';
+import axios from 'axios';
+import useCookie from './hooks/useCookie';
 
 const Chat = () => {
-
   const [textInput, setTextInput] = useState('');
-  const [response, setResponse] = useState('');
+  const [chat, setChat] = useState([]);
+  const [basePath, setBasePath] = useState('C:\\Users\\joshu_yu92ohr\\Desktop\\HACKT\\Gen_AI_Hackathon_Project\\backend');
+
+  const { getCookie } = useCookie(); // Use the useCookie hook
+  const csrfToken = getCookie('localhost'); // Replace 'csrf_token' with the actual name of your CSRF cookie
 
   const axiosInstance = axios.create({
     baseURL: 'http://localhost:5000/',
+    headers: {
+      'Content-Type': 'application/json',
+      //withCredentials : true,
+      'X-CSRFToken': csrfToken // Add CSRF token to the request headers
+    }
   });
 
   const interact = async () => {
-    //sends textInput to the AI and receives the response, then prints the response and clears the text box.
-    //the message history should appear above the active text box like a traditional texting app
-    //console.log(textInput);   
     try {
-      setResponse(await axiosInstance.post('ask-openapi', textInput));
-      return response.data;
+      const response = await axiosInstance.post('api/ask-openai', {
+        user_input: textInput,
+        //base_path: basePath,
+        chat: chat.map((item) => item.text), // Extract user messages
+      });
+  
+      const userMessage = { role: "user", text: textInput };
+      const aiMessage = { role: "AI", text: response.data.response }; // Assuming 'response.data.response' contains the AI's response
+  
+      setChat([...chat, userMessage, aiMessage]);
+      setTextInput('');
+      console.log(textInput);
+      console.log(response.data);
     } catch (error) {
-      console.error('L:', error);
+      console.error('Error:', error);
+    }
+  };
+
+  const sendFile = async () => {
+    //console.log("Sent file path to AI");
+    try {
+      const response = await axiosInstance.post('api/ask-openai', {
+        //user_input: textInput,
+        base_path: basePath,
+        chat: chat.map((item) => item.text), // Extract user messages
+      });
+  
+      //const userMessage = { role: "user", text: textInput };
+      const aiMessage = { role: "AI", text: response.data.response }; // Assuming 'response.data.response' contains the AI's response
+  
+      setChat([...chat,/* userMessage,*/ aiMessage]);
+      //setTextInput('');
+      //console.log(textInput);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error:', error);
     }
   }
 
@@ -28,12 +66,20 @@ const Chat = () => {
     <div className="main">
       <h1> Say Hi to Ferestha </h1>
       <div className="chatInterface">
+      <div className="convDisplay">
+        {chat.map((item, index) => (
+          <div key={index}>
+            <p><strong>{item.role}</strong> {item.text}</p>
+          </div>
+        ))}
+      </div>
         <div className="input">
           <Form>
             <Form.Group>
-              <Form.Control as="textarea" rows={5} placeholder="" onChange={(e) => setTextInput(e.target.value)}></Form.Control>       
+              <Form.Control as="textarea" rows={5} value={textInput} placeholder="" onChange={(e) => setTextInput(e.target.value)}></Form.Control>       
               <br></br>
               <button type="button" onClick={interact}>Submit</button>
+              <button type="button" onClick={sendFile} style={{marginLeft:'1vw'}}>File</button>
             </Form.Group>
           </Form>
         </div>
